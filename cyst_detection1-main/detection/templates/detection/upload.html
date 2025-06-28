@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image</title>
+</head>
+<body>
+    <h1>Upload Image for Cyst Detection</h1>
+    
+    <!-- Check if there are any messages or errors -->
+    {% if error_message %}
+        <p style="color:red;">{{ error_message }}</p>
+    {% endif %}
+
+    <!-- Form for uploading image -->
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="image">Select Image:</label>
+        <input type="file" id="image" name="image" required>
+        <br><br>
+        <button type="submit">Upload and Predict</button>
+    </form>
+
+    <!-- If there is a prediction result -->
+    {% if prediction %}
+        <h2>Prediction: {{ prediction }}</h2>
+        
+        <!-- If there is a processed contours image -->
+        {% if contours_image %}
+            <h3>Image with Cysts (if infected):</h3>
+            <img src="{{ contours_image }}" alt="Processed Image">
+        {% endif %}
+    {% endif %}
+</body>
+</html>
